@@ -1,0 +1,98 @@
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="text-center text-primary">Appointment Manager</h1>
+            <p class="text-center text-muted">Manage your appointments easily</p>
+        </div>
+    </div>
+
+    <!-- Create Appointment Form -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Create New Appointment</h4>
+        </div>
+        <div class="card-body">
+            <form (ngSubmit)="addAppointment()" #appointmentForm="ngForm">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="appointmentTitle" class="form-label">Appointment Description</label>
+                        <input 
+                            id="appointmentTitle"
+                            [(ngModel)]="newAppointmentTitle" 
+                            name="appointmentTitle"
+                            class="form-control" 
+                            placeholder="Enter appointment description"
+                            required
+                        />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="appointmentDate" class="form-label">Appointment Date</label>
+                        <input 
+                            id="appointmentDate"
+                            [(ngModel)]="newAppointmentDate" 
+                            name="appointmentDate"
+                            class="form-control" 
+                            type="date"
+                            required
+                        />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button 
+                            type="submit" 
+                            class="btn btn-success w-100"
+                            [disabled]="!appointmentForm.form.valid"
+                        >
+                            <i class="bi bi-plus-lg me-1"></i>Add
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment List -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0"><i class="bi bi-calendar-check me-2"></i>Appointment List</h4>
+            <small class="opacity-75">Total appointments: {{ appointments.length }}</small>
+        </div>
+        <div class="card-body">
+            <div *ngIf="appointments.length === 0" class="text-center py-4">
+                <i class="bi bi-calendar-x display-1 text-muted"></i>
+                <h5 class="text-muted mt-2">No appointments yet</h5>
+                <p class="text-muted">Create your first appointment above!</p>
+            </div>
+            
+            <div *ngFor="let appointment of appointments; index as i" class="appointment-item mb-3">
+                <div class="card border-start border-4 border-primary">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-calendar-event text-primary me-3 fs-4"></i>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">{{ appointment.title }}</h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-clock me-1"></i>
+                                            {{ appointment.date | date: 'EEEE, MMMM dd, yyyy' }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button 
+                                    class="btn btn-outline-danger btn-sm" 
+                                    (click)="deleteAppointment(i)"
+                                    title="Delete appointment"
+                                >
+                                    <i class="bi bi-trash me-1"></i>Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
