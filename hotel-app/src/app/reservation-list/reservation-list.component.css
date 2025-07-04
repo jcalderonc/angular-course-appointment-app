@@ -1,5 +1,5 @@
 .reservation-list-container {
-  max-width: 600px;
+  max-width: 1200px;
   margin: 40px auto;
   padding: 32px 24px;
   background: #fff;
@@ -71,4 +71,37 @@ ul {
   color: #888;
   font-size: 1.1em;
   margin-top: 32px;
+}
+
+/* Table rounded borders */
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #dee2e6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.table thead th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* Custom pastel blue for alternating rows */
+.table-row-pastel {
+  background-color: #e3f2fd !important; /* Very light pastel blue */
+}
+
+.table-row-pastel:hover {
+  background-color: #bbdefb !important; /* Slightly darker on hover */
 }

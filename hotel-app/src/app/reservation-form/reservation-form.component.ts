@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ReservationService } from '../services/reservation.service'; // Assuming you have a service to handle reservations
+import { MockoonService } from '../services/mockoon.service'; // Assuming you have a service to handle reservations
 import { Reservation } from '../models/reservation';
 import { Router, ActivatedRoute } from '@angular/router'; // Import Router for navigation
 import { HomeComponent } from '../home/home.component';
+import { ToastService } from '../services/toast.service'; // Import ToastService for notifications
 @Component({
   selector: 'app-reservation-form',
   templateUrl: './reservation-form.component.html',
@@ -18,7 +19,8 @@ export class ReservationFormComponent implements OnInit {
   
   constructor(
     private formBuilder: FormBuilder,
-    private reservationService: ReservationService,
+    private reservationService: MockoonService,
+    private toastService: ToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute // Inject ActivatedRoute to access route parameters
   ) 
@@ -37,27 +39,44 @@ export class ReservationFormComponent implements OnInit {
 
     let id = this.activatedRoute.snapshot.paramMap.get('id'); // Get the 'id' parameter from the route
     if (id) {
-      let reservation=this.reservationService.getReservationById(id);
-      if(reservation)
-      {
-        this.reservationForm.patchValue(reservation);
-      }
+      this.reservationService.getReservationById(id).subscribe(reservation => {
+        if (reservation) {
+          this.reservationForm.patchValue(reservation) ;
+        }});
     }
   }
 
   onSubmit() { 
     if (this.reservationForm.valid) {
       let reservation: Reservation = this.reservationForm.value;
-
       let id = this.activatedRoute.snapshot.paramMap.get('id'); // Get the 'id' parameter from the route
-    
       if (id) 
       {
-        this.reservationService.updateReservation(id, reservation);
+        this.reservationService.updateReservation(id, reservation).subscribe({
+          next: () => {
+            // 200-299 status codes (Success)
+            this.toastService.showSuccess('Reservation updated successfully!');
+          },
+          error: (error) => {
+            // 400-500+ status codes (Error)
+            console.error('Error updating reservation:', error);
+            this.toastService.showError('Failed to update reservation. Please try again.');
+          }
+        });
       }
       else
       {
-        this.reservationService.createReservation(reservation);
+        this.reservationService.createReservation(reservation).subscribe({
+          next: () => {
+            // 200-299 status codes (Success)
+            this.toastService.showSuccess('Reservation created successfully!');
+          },
+          error: (error) => { 
+            // 400-500+ status codes (Error)
+            console.error('Error creating reservation:', error);
+            this.toastService.showError('Failed to create reservation. Please try again.');
+          }
+        });
       }
 
       
