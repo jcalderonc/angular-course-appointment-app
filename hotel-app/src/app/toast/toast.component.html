@@ -1,0 +1,22 @@
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div *ngFor="let toast of toasts" 
+       class="toast show mb-2"
+       [class.text-bg-success]="toast.type === 'success'"
+       [class.text-bg-danger]="toast.type === 'error'"
+       [class.text-bg-warning]="toast.type === 'warning'"
+       [class.text-bg-info]="toast.type === 'info'">
+    <div class="toast-header">
+      <strong class="me-auto">
+        <i class="fas fa-check-circle" *ngIf="toast.type === 'success'"></i>
+        <i class="fas fa-exclamation-circle" *ngIf="toast.type === 'error'"></i>
+        <i class="fas fa-exclamation-triangle" *ngIf="toast.type === 'warning'"></i>
+        <i class="fas fa-info-circle" *ngIf="toast.type === 'info'"></i>
+        {{ getToastTitle(toast.type) }}
+      </strong>
+      <button type="button" class="btn-close" (click)="removeToast(toast.id)"></button>
+    </div>
+    <div class="toast-body">
+      {{ toast.message }}
+    </div>
+  </div>
+</div>
