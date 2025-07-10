@@ -1,0 +1,27 @@
+.product-card{
+    max-width: 150px;
+}
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding: 20px;
+}
+mat-card:hover {
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+mat-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.search-bar mat-form-field {
+  flex: 1;
+  margin-right: 10px; 
+}

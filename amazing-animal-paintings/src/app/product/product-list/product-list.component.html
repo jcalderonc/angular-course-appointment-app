@@ -1,0 +1,36 @@
+
+<div class="container">
+  <h2>Our new collection</h2>
+  <div class="search-bar">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter()" placeholder="Search products" [(ngModel)]="filterValue" />
+      <mat-icon matSuffix *ngIf="filterValue" (click)="clearFilter()">close</mat-icon>
+      </mat-form-field>
+    <mat-form-field>
+      <mat-select (selectionChange)="applyOrder()" placeholder="Order by" [(ngModel)]="selectedOrder">
+        <mat-option *ngFor="let order of orderOptions" [value]="order.key">
+          {{ order.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="product-container">
+    <div *ngFor="let product of filteredProducts">
+        <mat-card class="product-card" appearance="outlined">
+    
+      <img mat-card-image src="assets/images/{{product.image_url}}">
+      <mat-card-content (click)="addToCart(product)">
+        <mat-card-title>{{product.name}}</mat-card-title>
+        <mat-card-subtitle>{{product.price | currency:'USD'}}</mat-card-subtitle>
+      </mat-card-content>
+      
+    </mat-card>
+    </div>
+  </div>
+
+
+</div>
+
+
