@@ -1,0 +1,14 @@
+<div *ngFor="let user of users; let i = index" class="user-card" [class.user-card-pastel]="i % 2 === 1">
+  <div class="user-info">
+    <h3>{{ user.name }}</h3>
+    </div>
+      
+</div>
+
+<button (click)="refreshUsers()" class="btn btn-primary load-more-btn">
+  Load More Users
+</button>
+
+<button  class="btn btn-danger dummy-btn">
+  Nothing
+</button>
