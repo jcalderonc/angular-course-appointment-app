@@ -1,0 +1,37 @@
+<label>{{ label }}</label><br />
+<button (click)="toggleTheme()">
+  Toggle Theme
+</button>
+
+<br />
+<br />
+
+<input type="number" value={{quantity()}} (change)="changeQuantity($event)" />
+<label>Total: {{ total() }}</label>
+
+
+
+<br /><br />
+
+
+<div>
+  <input type="text" (input)="changeFilter($event)"/>
+</div>
+<br />
+<table>
+  <tr *ngFor="let product of filteredProducts()">
+    <td>{{ product.id }}</td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.price }}</td>
+  </tr>
+</table>
+
+
+
+
+<br /><br />
+
+
+<app-product-list [products]="childProducts"></app-product-list>
+
+<router-outlet />
